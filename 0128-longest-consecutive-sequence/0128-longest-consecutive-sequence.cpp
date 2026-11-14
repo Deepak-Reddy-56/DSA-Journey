@@ -1,29 +1,28 @@
 class Solution {
 public:
-    bool searchset(unordered_set<int>& ans, int ele){
-        if(ans.find(ele)!=ans.end())
-        return true;
-
-        return false;
-    }
-    
     int longestConsecutive(vector<int>& nums) {
-        int count = 1, maxcount = 0;
+        if(nums.size() == 0)
+        return 0;
+
+        int maxcount = 0, ele = nums[0];
         unordered_set<int> ans;
-        for(int i=0;i<nums.size();i++){
+        int count = 1;
+        for(int i=0; i<nums.size(); i++){
             ans.insert(nums[i]);
         }
-        for(auto i:ans){
-            int ele = i;
+
+        for(auto i : ans){
+            ele = i;
             count = 1;
-            if(!searchset(ans,ele-1)){
-                while(searchset(ans, ele+1)){
-                    ele = ele+1;
+            if(ans.find(ele-1)==ans.end()){
+                while(ans.find(ele + 1)!=ans.end()){
+                    ele++;
                     count++;
-                }
             }
-            maxcount = max(maxcount,count);
         }
+            maxcount = max(maxcount, count);
+        }
+
         return maxcount;
     }
-};  
+};
